@@ -1,9 +1,12 @@
 package org.roylin.springbootmall.dao;
 
+import org.roylin.springbootmall.dto.ProductRequest;
 import org.roylin.springbootmall.model.Product;
 
 public interface ProductDao {
 
     Product getProductById(Integer productId);
+
+    Integer createProduct(ProductRequest productRequest);
 
 }
