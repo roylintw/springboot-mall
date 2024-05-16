@@ -31,15 +31,7 @@ public class ProductDaoImpl implements ProductDao {
         Map<String, Object> map = new HashMap<>();
 
         // 查詢條件
-        if (productQueryParam.getCategory() != null) {
-            sql = sql + " AND category = :category";
-            map.put("category", productQueryParam.getCategory().name());
-        }
-
-        if (productQueryParam.getSearch() != null) {
-            sql = sql + " AND product_name LIKE :search";
-            map.put("search", "%" + productQueryParam.getSearch() + "%");
-        }
+        sql = addFilteringSql(sql, map, productQueryParam);
 
         Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
         return total;
@@ -53,15 +45,7 @@ public class ProductDaoImpl implements ProductDao {
         Map<String, Object> map = new HashMap<>();
 
         // 查詢條件
-        if (productQueryParam.getCategory() != null) {
-            sql = sql + " AND category = :category";
-            map.put("category", productQueryParam.getCategory().name());
-        }
-
-        if (productQueryParam.getSearch() != null) {
-            sql = sql + " AND product_name LIKE :search";
-            map.put("search", "%" + productQueryParam.getSearch() + "%");
-        }
+        sql = addFilteringSql(sql, map, productQueryParam);
 
         // 11-12
         // 排序
@@ -153,4 +137,20 @@ public class ProductDaoImpl implements ProductDao {
 
         namedParameterJdbcTemplate.update(sql, map);
     }
+
+    // 11-15
+    private String addFilteringSql(String sql, Map<String, Object> map, ProductQueryParam productQueryParam) {
+        if (productQueryParam.getCategory() != null) {
+            sql = sql + " AND category = :category";
+            map.put("category", productQueryParam.getCategory().name());
+        }
+
+        if (productQueryParam.getSearch() != null) {
+            sql = sql + " AND product_name LIKE :search";
+            map.put("search", "%" + productQueryParam.getSearch() + "%");
+        }
+
+        return sql;
+    }
+
 }
