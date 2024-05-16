@@ -11,4 +11,8 @@ public class ProductQueryParam {
 
     private String search;
 
+    private String orderBy;
+
+    private String sort;
+
 }
