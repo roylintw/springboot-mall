@@ -1,6 +1,8 @@
 package org.roylin.springbootmall.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.roylin.springbootmall.constant.ProductCategory;
 import org.roylin.springbootmall.dto.ProductQueryParam;
 import org.roylin.springbootmall.dto.ProductRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Valid // 11-13
 @RestController
 public class ProductController {
 
@@ -33,7 +36,12 @@ public class ProductController {
             // 11-12
             // 排序條件 Sorting
             @RequestParam(defaultValue = "created_date") String orderBy,
-            @RequestParam(defaultValue = "desc") String sort
+            @RequestParam(defaultValue = "desc") String sort,
+
+            // 11-13
+            // 分頁 Pagination
+            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit, // 限制幾筆
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset // 跳過幾筆
     ) {
         // 11-11
         ProductQueryParam productQueryParam = new ProductQueryParam();
@@ -42,6 +50,9 @@ public class ProductController {
         // 11-12
         productQueryParam.setOrderBy(orderBy);
         productQueryParam.setSort(sort);
+        // 11-13
+        productQueryParam.setLimit(limit);
+        productQueryParam.setOffset(offset);
 
         List<Product> productList = productService.getProducts(productQueryParam);
 
