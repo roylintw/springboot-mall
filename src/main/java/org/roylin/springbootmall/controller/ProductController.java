@@ -2,6 +2,7 @@ package org.roylin.springbootmall.controller;
 
 import jakarta.validation.Valid;
 import org.roylin.springbootmall.constant.ProductCategory;
+import org.roylin.springbootmall.dto.ProductQueryParam;
 import org.roylin.springbootmall.dto.ProductRequest;
 import org.roylin.springbootmall.model.Product;
 import org.roylin.springbootmall.service.ProductService;
@@ -22,12 +23,18 @@ public class ProductController {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    // 11-10
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
             ) {
-        List<Product> productList = productService.getProducts(category, search);
+        // 11-11
+        ProductQueryParam productQueryParam = new ProductQueryParam();
+        productQueryParam.setCategory(category);
+        productQueryParam.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParam);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

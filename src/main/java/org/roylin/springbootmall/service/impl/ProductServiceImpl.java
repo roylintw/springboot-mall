@@ -1,7 +1,7 @@
 package org.roylin.springbootmall.service.impl;
 
-import org.roylin.springbootmall.constant.ProductCategory;
 import org.roylin.springbootmall.dao.ProductDao;
+import org.roylin.springbootmall.dto.ProductQueryParam;
 import org.roylin.springbootmall.dto.ProductRequest;
 import org.roylin.springbootmall.model.Product;
 import org.roylin.springbootmall.service.ProductService;
@@ -17,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory category, String search) {
-        return productDao.getProducts(category, search);
+    public List<Product> getProducts(ProductQueryParam productQueryParam) {
+        return productDao.getProducts(productQueryParam);
     }
 
     @Override
