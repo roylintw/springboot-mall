@@ -1,6 +1,7 @@
 package org.roylin.springbootmall.controller;
 
 import jakarta.validation.Valid;
+import org.roylin.springbootmall.dto.UserLoginRequest;
 import org.roylin.springbootmall.dto.UserRegisterRequest;
 import org.roylin.springbootmall.model.User;
 import org.roylin.springbootmall.service.UserService;
@@ -24,5 +25,13 @@ public class UserController {
         User user = userService.getUserById(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    // 11-20
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+        User user = userService.login(userLoginRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }
